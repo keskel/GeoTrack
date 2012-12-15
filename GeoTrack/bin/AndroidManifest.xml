@@ -31,11 +31,6 @@
             android:name=".MyMapActivity"
 			android:configChanges="orientation|keyboardHidden" >
         </activity> 
-
-        <!-- TODO: remove tests -->
-        <activity android:name=".DatabaseTester"> 
-
-        </activity>
     
     </application>
     
