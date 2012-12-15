@@ -11,7 +11,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
+//import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,12 +26,11 @@ public class MenuActivity extends FragmentActivity {
     private double longitude;
 	private static final String LATITUDE = "loc_lat";
 	private static final String LONGITUDE = "loc_lon";
-	
-    //private final String FILENAME = "location_file";
     
 	// handle(r) for the database
     DatabaseHandler db = new DatabaseHandler(this);
     
+    // create the layout when we start 
     @Override
     public void onCreate(Bundle savedInstanceState) {
        	super.onCreate(savedInstanceState);
@@ -46,23 +45,11 @@ public class MenuActivity extends FragmentActivity {
     		// Get location data included in the Intent
     		latitude = intent.getDoubleExtra(LATITUDE, 0);
     		longitude = intent.getDoubleExtra(LONGITUDE, 0);
-    		Log.d("receiver", "Got latitude: " + latitude);
-    		Log.d("receiver", "Got longitude: " + longitude);
-
-    		/*
-    		String string = String.format("%f %f\n", latitude, longitude);
-    		// save (we shouldn't save at every update.. but this is before i do it more wisely)
-    		try {
-    			FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_APPEND);
-    			fos.write(string.getBytes());
-    			fos.close();
-    			Log.d("WRITE menu", "SUCCESS!");
-    		} catch (IOException e) {
-    			Log.d("WRITE menu", "FAIL", e);
-    		}
-    		*/
-    		
-    		// get date
+    		// log some
+    		//Log.d("receiver", "Got latitude: " + latitude);
+    		//Log.d("receiver", "Got longitude: " + longitude);
+   		
+    		// get date with desired format
     		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     		String date = sdf.format(new Date());
 
@@ -70,16 +57,10 @@ public class MenuActivity extends FragmentActivity {
    			db.addLocation(new DBObject((float)latitude, (float)longitude, date ));
    	        db.close();
    	        
-    		Log.d("Location: ", latitude + " / " + longitude + " " + date);	// log it
+    		//Log.d("Location: ", latitude + " / " + longitude + " " + date);	// log it
     		
     	}
     };
-    
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.activity_main, menu);
-//        return true;
-//    }
     
     // MENU creation
     @Override
@@ -99,6 +80,7 @@ public class MenuActivity extends FragmentActivity {
         return true;
     }
     
+    // when we get back from anything, we start over.. the gps and broadcaster..
     @Override
     public void onResume() {
     	super.onResume();
@@ -109,6 +91,7 @@ public class MenuActivity extends FragmentActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("gps-location"));
 	}
     
+    // stop all on pause-event
     @Override
     public void onPause(){
     	super.onPause();
@@ -118,6 +101,7 @@ public class MenuActivity extends FragmentActivity {
     	gps.stopUsingGPS();
     }
 
+    // destroy! destoy!
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -127,20 +111,18 @@ public class MenuActivity extends FragmentActivity {
         gps.stopUsingGPS();
     }
     
+    
+    // when user clicks a button, we get here
     public void onClick(View v) {
         
         switch(v.getId()) {
            case R.id.button2:
-        	   // save
-        	   
-        	   // näytä lista
+        	   // show list
         	   Intent list = new Intent(MenuActivity.this, MyListActivity.class);
                startActivity(list);
         	   break;
            case R.id.button1:
-        	   // save
-        	   
-        	   // näytä kartta
+        	   // show map
         	   Intent map = new Intent(MenuActivity.this, MyMapActivity.class);
                startActivity(map);
         	   break;

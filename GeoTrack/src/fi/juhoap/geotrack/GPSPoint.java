@@ -1,8 +1,12 @@
 package fi.juhoap.geotrack;
 
+/*
+ * class for one gps point
+ */
+
 import java.io.Serializable;
 
-public class GPSPoint implements Serializable{
+public class GPSPoint implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	

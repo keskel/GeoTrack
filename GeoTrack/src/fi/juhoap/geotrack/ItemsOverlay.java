@@ -1,5 +1,9 @@
 package fi.juhoap.geotrack;
 
+/*
+ * class for the overlay items
+ */
+
 import java.util.ArrayList;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -37,11 +41,13 @@ public class ItemsOverlay extends ItemizedOverlay {
 		return mOverlays.size();
 	}
 	
+	// adds new overlay to arraylist and populates the list
 	public void addOverlay(OverlayItem overlay) {
 	    mOverlays.add(overlay);
 	    populate();
 	}
 	
+	// creates a new alertdialog for the tapped item overlay on the map
 	@Override
 	protected boolean onTap(int index) {
 	  OverlayItem item = mOverlays.get(index);

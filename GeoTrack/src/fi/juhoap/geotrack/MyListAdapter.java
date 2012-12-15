@@ -1,5 +1,9 @@
 package fi.juhoap.geotrack;
 
+/*
+ * class for my list adapter 
+ */
+
 import java.util.List;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -32,11 +36,12 @@ public class MyListAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup viewGroup) {
-        MyListRow entry = listRow.get(position);
+        MyListRow entry = listRow.get(position); // get entry for the desired list position
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.list_item, null);
         }
+        // set location, date and icon for the view
         TextView location = (TextView) convertView.findViewById(R.id.textView2);
         location.setText(entry.getLatitude() + " / " + entry.getLongitude());
 

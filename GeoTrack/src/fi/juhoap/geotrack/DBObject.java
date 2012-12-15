@@ -1,5 +1,9 @@
 package fi.juhoap.geotrack;
 
+/**
+ * class for single database object
+ */
+
 public class DBObject {
 
 	//private variables
@@ -20,7 +24,7 @@ public class DBObject {
 		this.date = date;
 	}
 
-	// constructor
+	// constructor without id
 	public DBObject(float latitude, float longitude, String date){
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -47,22 +51,22 @@ public class DBObject {
 		this.latitude = latitude;
 	}
 
-	// getting latitude
+	// getting longitude
 	public float getLongitude() {
 		return this.longitude;
 	}
 
-	// setting latitude
+	// setting longitude
 	public void setLongitude(float longitude){
 		this.longitude = longitude;
 	}
 	
-	// getting phone number
+	// getting date
 	public String getDate(){
 		return this.date;
 	}
 
-	// setting phone number
+	// setting date
 	public void setDate(String date){
 		this.date = date;
 	}

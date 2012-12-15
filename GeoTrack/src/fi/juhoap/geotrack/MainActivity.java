@@ -1,6 +1,10 @@
 package fi.juhoap.geotrack;
 
-// TODO: menu
+/*
+ * MAIN program (splash screen)
+ * - waits for gps-coordinate and starts main menu
+ * 
+ */
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,7 +15,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
+//import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,12 +29,11 @@ public class MainActivity extends FragmentActivity {
     private double longitude;
 	private static final String LATITUDE = "loc_lat";
 	private static final String LONGITUDE = "loc_lon";
-	
-    //private final String FILENAME = "location_file";
     
 	// handle(r) for the database
     DatabaseHandler db = new DatabaseHandler(this);
     
+    // create the layout when we start 
     @Override
     public void onCreate(Bundle savedInstanceState) {
        	super.onCreate(savedInstanceState);
@@ -46,24 +49,11 @@ public class MainActivity extends FragmentActivity {
     		// Get location data included in the Intent
     		latitude = intent.getDoubleExtra(LATITUDE, 0);
     		longitude = intent.getDoubleExtra(LONGITUDE, 0);
-    		Log.d("receiver", "Got latitude: " + latitude);
-    		Log.d("receiver", "Got longitude: " + longitude);
+    		// write to log
+    		//Log.d("receiver", "Got latitude: " + latitude);
+    		//Log.d("receiver", "Got longitude: " + longitude);
     		
-			/*
-			 * TODO: remove file lines
-			// save
-			String string = String.format("%f %f\n", latitude, longitude);
-			try {
-			   FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_APPEND);
-			   fos.write(string.getBytes());
-			   fos.close();
-			   Log.d("WRITE main", "SUCCESS!");
-			} catch (IOException e) {
-			   Log.d("WRITE main", "FAIL", e);
-			}
-			*/
-    		
-    		// get date
+    		// get date with desired format
     		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     		String date = sdf.format(new Date());
 
@@ -71,21 +61,14 @@ public class MainActivity extends FragmentActivity {
    			db.addLocation(new DBObject((float)latitude, (float)longitude, date ));
    	        db.close();
    	        
-    		Log.d("Location: ", latitude + " / " + longitude + " " + date);	// log it
+    		//Log.d("Location: ", latitude + " / " + longitude + " " + date);	// log it
 
-   			// change activity (screen) to menu activity
+   			// change activity (screen) to menu activity when we get our first gps-coordinate
        		Intent menu = new Intent(MainActivity.this, MenuActivity.class);
             startActivity(menu);
     	}
     };
 
-// TODO: remove these commented lines when menu works
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.activity_main, menu);
-//        return true;
-//    }
-    
     // MENU creation
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

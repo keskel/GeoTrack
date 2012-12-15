@@ -1,5 +1,9 @@
 package fi.juhoap.geotrack;
 
+/*
+ * class for the list activity
+ */
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +15,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
+//import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,8 +32,6 @@ public class MyListActivity extends ListActivity {
 	private static final String LATITUDE = "loc_lat";
 	private static final String LONGITUDE = "loc_lon";
 	
-    //private final String FILENAME = "location_file";
-	
     // list for graphical list row items
 	final List<MyListRow> listOfRow = new ArrayList<MyListRow>();
 	MyListAdapter adapter;
@@ -41,11 +43,12 @@ public class MyListActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list);
 		
+		// new clickable list view
         ListView list = (ListView) findViewById(android.R.id.list);
         list.setClickable(true);
 
         // read locations from db
-        Log.d("Reading: ", "Reading all contacts..");
+        //Log.d("Reading: ", "Reading all contacts..");
         List<DBObject> locations = db.getAllLocations();       
         db.close();
   
@@ -54,13 +57,13 @@ public class MyListActivity extends ListActivity {
             // add location data to list row
         	listOfRow.add(new MyListRow(cn.getLatitude(),cn.getLongitude(), cn.getDate()));
             // debugging
-        	Log.d("Location: ", "Id: "+cn.getID()+" ,LAT: " + cn.getLatitude() + " ,LON: " + cn.getLongitude() + " ,DATE: " + cn.getDate());
+        	//Log.d("Location: ", "Id: "+cn.getID()+" ,LAT: " + cn.getLatitude() + " ,LON: " + cn.getLongitude() + " ,DATE: " + cn.getDate());
         }
 
         // give the locations in list to adapter
         adapter = new MyListAdapter(this, listOfRow);
 
-        // set click-listener
+        // set click-listener for the list
         list.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
@@ -77,6 +80,7 @@ public class MyListActivity extends ListActivity {
             }
         });
 
+        // set list adapter
         list.setAdapter(adapter);
 	}
 	
@@ -96,23 +100,8 @@ public class MyListActivity extends ListActivity {
     		// Get location data included in the Intent
     		double latitude = intent.getDoubleExtra(LATITUDE, 0);
     		double longitude = intent.getDoubleExtra(LONGITUDE, 0);
-    		Log.d("receiver", "Got latitude: " + latitude);
-    		Log.d("receiver", "Got longitude: " + longitude);
-    		
-    		// update ListView
-    		//points.addGPSPoint(new GPSPoint((float)latitude, (float)longitude));
-			/*
-    		// save
-     	   	String string = String.format("%f %f\n", latitude, longitude);
-            try {
-         	   FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_APPEND);
-         	   fos.write(string.getBytes());
-         	   fos.close();
-         	   Log.d("WRITE list", "SUCCESS!");
-            } catch (IOException e) {
-         	   Log.d("WRITE list", "FAIL", e);
-            }
-            */
+    		//Log.d("receiver", "Got latitude: " + latitude);
+    		//Log.d("receiver", "Got longitude: " + longitude);
     		
     		// get date
     		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -122,9 +111,11 @@ public class MyListActivity extends ListActivity {
    			db.addLocation(new DBObject((float)latitude, (float)longitude, date ));
    	        db.close();
    	        
-    		Log.d("Location: ", latitude + " / " + longitude + " " + date);	// log it
+    		//Log.d("Location: ", latitude + " / " + longitude + " " + date);	// log it
     		
+   	        // add new data to list
     		listOfRow.add(new MyListRow((float)latitude, (float)longitude, date));
+    		// notify adapter that the list data has changed (redraws list)
     		adapter.notifyDataSetChanged();
     		
     	}

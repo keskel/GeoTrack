@@ -1,5 +1,9 @@
 package fi.juhoap.geotrack;
 
+/*
+ * class for list of gps points 
+ */
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

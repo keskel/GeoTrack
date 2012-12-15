@@ -1,5 +1,9 @@
 package fi.juhoap.geotrack;
 
+/*
+ * class for the main menu fragment
+ */
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;

@@ -1,5 +1,9 @@
 package fi.juhoap.geotrack;
 
+/**
+ * Handler class for the database
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 import android.content.ContentValues;
